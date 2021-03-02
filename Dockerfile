@@ -1,7 +1,5 @@
 FROM zxing/alpine
 
-RUN groupadd -r dummy && useradd -r -g dummy dummy -u 1000
-
 # webui + aria2
 RUN apk update ;\
 	apk --no-cache add aria2 busybox curl unzip ;\
@@ -16,7 +14,7 @@ RUN apk update ;\
     curl -L $GITHUB_REPO"/releases/download/"$LATEST"/goreman_linux_amd64.zip" > goreman.zip ;\
     unzip goreman.zip && mv /goreman /usr/local/bin/goreman && rm -R goreman* ;\
 	# setup Procfile
-	echo "web: gosu dummy /bin/busybox httpd -f -p 8080 -h /webui-aria2\nbackend: gosu dummy /usr/bin/aria2c --enable-rpc --rpc-listen-all --dir=/data" > Procfile
+	echo "web: gosu root /bin/busybox httpd -f -p 8080 -h /webui-aria2\nbackend: gosu root /usr/bin/aria2c --enable-rpc --rpc-listen-all --dir=/data" > Procfile
 
 
 ADD ./docs /webui-aria2
