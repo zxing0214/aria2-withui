@@ -1,8 +1,7 @@
 FROM zxing/alpine
 
-# webui + aria2
-RUN apk update ;\
-	apk --no-cache add aria2 busybox curl unzip ;\
+# aria2
+RUN apk --no-cache add aria2 busybox curl unzip ;\
 	# gosu 
 	GITHUB_REPO="https://github.com/tianon/gosu" ;\
   	LATEST=`curl -s  $GITHUB_REPO"/releases/latest" | grep -Eo "[0-9].[0-9]*"` ;\
@@ -11,12 +10,12 @@ RUN apk update ;\
 	# goreman supervisor
 	GITHUB_REPO="https://github.com/mattn/goreman" ;\
     LATEST=`curl -s  $GITHUB_REPO"/releases/latest" | grep -Eo "v[0-9]*.[0-9]*.[0-9]*"` ;\
-    curl -L "${GITHUB_REPO}/releases/download/${LATEST}/goreman_${LATEST}_linux_amd64.tar.gz" > goreman.zip ;\
-    unzip goreman.zip && mv /goreman /usr/local/bin/goreman && rm -R goreman* ;\
+    curl -L "${GITHUB_REPO}/releases/download/${LATEST}/goreman_${LATEST}_linux_amd64.tar.gz" > goreman.tgz ;\
+    tar xzvf goreman.tgz && mv /goreman_${LATEST}_linux_amd64/goreman /usr/local/bin/goreman && rm -R goreman* ;\
 	# setup Procfile
 	echo "web: gosu root /bin/busybox httpd -f -p 8080 -h /webui-aria2\nbackend: gosu root /usr/bin/aria2c --enable-rpc --rpc-listen-all --dir=/data" > Procfile
 
-
+# webui
 ADD ./docs /webui-aria2
 
 # aria2 downloads directory
