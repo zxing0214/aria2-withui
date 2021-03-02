@@ -11,7 +11,7 @@ RUN apk update ;\
 	# goreman supervisor
 	GITHUB_REPO="https://github.com/mattn/goreman" ;\
     LATEST=`curl -s  $GITHUB_REPO"/releases/latest" | grep -Eo "v[0-9]*.[0-9]*.[0-9]*"` ;\
-    curl -L $GITHUB_REPO"/releases/download/"$LATEST"/goreman_linux_amd64.zip" > goreman.zip ;\
+    curl -L "${GITHUB_REPO}/releases/download/${LATEST}/goreman_${LATEST}_linux_amd64.tar.gz" > goreman.zip ;\
     unzip goreman.zip && mv /goreman /usr/local/bin/goreman && rm -R goreman* ;\
 	# setup Procfile
 	echo "web: gosu root /bin/busybox httpd -f -p 8080 -h /webui-aria2\nbackend: gosu root /usr/bin/aria2c --enable-rpc --rpc-listen-all --dir=/data" > Procfile

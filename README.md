@@ -24,4 +24,4 @@ docker run --restart=always \
 ## 相关链接
 - GitHub [zxing0214/aria2-withui](https://github.com/zxing0214/aria2-withui)
 - Docker [zxing/aria2-withui](https://hub.docker.com/r/zxing/aria2-withui)
-- 原版frp项目 [ziahamza/webui-aria2](https://github.com/ziahamza/webui-aria2)
+- 原版 webui-aria2 项目 [ziahamza/webui-aria2](https://github.com/ziahamza/webui-aria2)
